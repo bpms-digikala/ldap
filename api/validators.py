@@ -18,7 +18,7 @@ def codemeli(value):
         sum += int(value[i:i+1])*(10 - i)
     sum %= 11
     if (sum < 2 and checking == sum) or (sum >= 2 and checking + sum == 11):
-        True
+        return value
     else:
         raise ValidationError(
             _('%(value)s کد ملی معتبری نمی‌باشد.'),
@@ -29,11 +29,13 @@ def codemeli(value):
 
 
 def namfarsi(value):
-    if not(re.match("^[\u0600-\u06FF\\s]+$", value)):
+    if not(re.match("^[\u0600-\u06FF\\s]+$", value)) and not(re.match("^$|\\s+", value)):
         raise ValidationError(
             _('%(value)s نام فارسی نمی‌باشد.'),
             params={'value': value},
         )
+    else:
+        return value
 
 
 def mobile(value):
@@ -42,6 +44,8 @@ def mobile(value):
             _('%(value)s شماره موبایل معتبر نمی‌باشد.'),
             params={'value': value},
         )
+    else:
+        return value
 
 
 def emailcheck(value):
@@ -50,3 +54,15 @@ def emailcheck(value):
             _('%(value)s ایمیل معتبر نمی‌باشد.'),
             params={'value': value},
         )
+    else:
+        return value
+
+
+def likert(value):
+    if not(re.match("^[1-5]$", str(value))):
+        raise ValidationError(
+            _('%(value)s گزینه انتخابی معتبر نیست.'),
+            params={'value': value},
+        )
+    else:
+        return value

@@ -1,10 +1,9 @@
 from django.db import models
-from datetime import datetime
-from .validators import codemeli, namfarsi, mobile, emailcheck
+from .validators import codemeli, namfarsi, mobile, emailcheck, likert
 
 
 class Reference(models.Model):
-    date = models.DateTimeField(default=datetime.now, blank=True)
+    date = models.DateTimeField(auto_now_add=True, blank=True)
     email = models.CharField(max_length=50, validators=[emailcheck])
     codemelli = models.CharField(max_length=10, validators=[
                                  codemeli], unique=True)
@@ -14,3 +13,38 @@ class Reference(models.Model):
     p_name = models.CharField(max_length=200, validators=[namfarsi])
     p_email = models.CharField(max_length=50, validators=[emailcheck])
     p_mobile = models.CharField(max_length=20, validators=[mobile])
+
+
+class Manager(models.Model):
+    date = models.DateTimeField(auto_now_add=True, blank=True)
+    reference = models.OneToOneField(Reference, on_delete=models.CASCADE)
+    job = models.CharField(max_length=200, validators=[namfarsi])
+    detail = models.CharField(max_length=255, validators=[namfarsi])
+    success = models.CharField(max_length=255, validators=[namfarsi])
+    creativity = models.CharField(max_length=255, validators=[namfarsi])
+    teamwork = models.CharField(max_length=255, validators=[namfarsi])
+    strong = models.CharField(max_length=255, validators=[namfarsi])
+    improve = models.CharField(max_length=255, validators=[
+                               namfarsi], blank=True)
+    separation = models.CharField(
+        max_length=255, validators=[namfarsi])
+    suggest = models.IntegerField(validators=[likert])
+    point = models.CharField(max_length=255, validators=[
+                             namfarsi], blank=True)
+
+
+class Partner(models.Model):
+    date = models.DateTimeField(auto_now_add=True, blank=True)
+    reference = models.OneToOneField(Reference, on_delete=models.CASCADE)
+    job = models.CharField(max_length=200, validators=[namfarsi])
+    detail = models.CharField(max_length=255, validators=[namfarsi])
+    success = models.CharField(max_length=255, validators=[namfarsi])
+    creativity = models.CharField(max_length=255, validators=[namfarsi])
+    teamwork = models.CharField(max_length=255, validators=[namfarsi])
+    strong = models.CharField(max_length=255, validators=[namfarsi])
+    improve = models.CharField(max_length=255, validators=[
+                               namfarsi], blank=True)
+    separation = models.CharField(max_length=255, validators=[namfarsi])
+    suggest = models.IntegerField(validators=[likert])
+    point = models.CharField(max_length=255, validators=[
+                             namfarsi], blank=True)
