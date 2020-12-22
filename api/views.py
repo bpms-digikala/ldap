@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import Reference, Manager, Partner
 from .serializers import ReferenceSerializer, ManagerSerializer, PartnerSerializer
-from .validators import namfarsi, likert
+from .validators import namfarsi, likert, namOrnull
 from django.core.exceptions import ValidationError
 
 
@@ -26,10 +26,10 @@ class ReferenceViewSet(viewsets.ModelViewSet):
                 creativity = namfarsi(request.data['creativity'])
                 teamwork = namfarsi(request.data['teamwork'])
                 strong = namfarsi(request.data['strong'])
-                improve = namfarsi(request.data['improve'])
+                improve = namOrnull(request.data['improve'])
                 separation = namfarsi(request.data['separation'])
                 suggest = likert(request.data['suggest'])
-                point = namfarsi(request.data['point'])
+                point = namOrnull(request.data['point'])
 
                 Manager.objects.create(reference=reference, job=job, detail=detail, success=success, creativity=creativity, teamwork=teamwork,
                                        strong=strong, improve=improve, separation=separation, suggest=suggest, point=point)

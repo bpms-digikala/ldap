@@ -29,9 +29,19 @@ def codemeli(value):
 
 
 def namfarsi(value):
+    if not(re.match("^[\u0600-\u06FF\\s]+$", value)):
+        raise ValidationError(
+            _('%(value)s حروف فارسی نمی‌باشد.'),
+            params={'value': value},
+        )
+    else:
+        return value
+
+
+def namOrnull(value):
     if not(re.match("^[\u0600-\u06FF\\s]+$", value)) and not(re.match("^$|\\s+", value)):
         raise ValidationError(
-            _('%(value)s نام فارسی نمی‌باشد.'),
+            _('%(value)s حروف فارسی نمی‌باشد.'),
             params={'value': value},
         )
     else:

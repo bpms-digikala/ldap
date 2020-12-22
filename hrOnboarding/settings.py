@@ -43,14 +43,10 @@ SECRET_KEY = get_secret('SECRET_KEY')
 DEBUG = True
 
 
-# Added by nabavieh '*'
-# ALLOWED_HOSTS = ['*']
-
-
 # Added by nabavieh
-CSRF_COOKIE_SECURE = True
-CSRF_USE_SESSIONS = True
-SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
+CSRF_USE_SESSIONS = False
+SESSION_COOKIE_SECURE = False
 
 
 # Application definition
