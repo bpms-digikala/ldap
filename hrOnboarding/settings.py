@@ -180,9 +180,9 @@ USE_TZ = True
  
 STATIC_URL = '/static/'
 
-STATICFILES_DIR = '/opt/Onboarding/onboarding/static/'
+STATICFILES_DIR = '/static/'
 
-STATIC_ROOT = '/opt/Onboarding/onboarding/static/'
+STATIC_ROOT = '/static/'
   
 
 # Extra places for collectstatic to find static files.
