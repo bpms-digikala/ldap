@@ -177,13 +177,13 @@ USE_TZ = True
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
  
 
-STATIC_ROOT = '/opt/Onboarding/onboarding/static'
+ 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
- 
+STATICFILES_DIR = '/opt/Onboarding/onboarding/static/'
+
+STATIC_ROOT = '/opt/Onboarding/onboarding/static/'
+  
 
 # Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = (
