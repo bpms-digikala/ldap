@@ -7,6 +7,8 @@ from .models import Reference, Manager, Partner
 from .serializers import ReferenceSerializer, ManagerSerializer, PartnerSerializer
 from .validators import namfarsi, likert, namOrnull
 from django.core.exceptions import ValidationError
+from django.conf import settings
+import requests
 
 
 class ReferenceViewSet(viewsets.ModelViewSet):
@@ -15,72 +17,115 @@ class ReferenceViewSet(viewsets.ModelViewSet):
     # permission_classes = (permissions.BasePermission,)
     http_method_names = ['post', 'get']
 
+    def create(self, request, *args, **kwargs):
+        if 'token' in request.data:
+            r = requests.post(
+                'https://www.google.com/recaptcha/api/siteverify',
+                data={
+                    'secret': settings.SECRET_CAPTCHA,
+                    'response': request.data['token'],
+                }
+            )
+            if r.json()['success']:
+                serializer = self.get_serializer(data=request.data)
+                serializer.is_valid(raise_exception=True)
+                self.perform_create(serializer)
+                headers = self.get_success_headers(serializer.data)
+                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+            return Response(data={'error': 'ReCAPTCHA not verified.'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        else:
+            return Response(data={'error': 'ReCAPTCHA not verified.'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
     @action(detail=True, methods=['POST'])
     def manager_reference(self, request, pk=None):
-        if 'reference' in request.data:
-            try:
-                reference = Reference.objects.get(id=pk)
-                job = namfarsi(request.data['job'])
-                detail = namfarsi(request.data['detail'])
-                success = namfarsi(request.data['success'])
-                creativity = namfarsi(request.data['creativity'])
-                teamwork = namfarsi(request.data['teamwork'])
-                strong = namfarsi(request.data['strong'])
-                improve = namOrnull(request.data['improve'])
-                separation = namfarsi(request.data['separation'])
-                suggest = likert(request.data['suggest'])
-                point = namOrnull(request.data['point'])
+        if 'token' in request.data:
+            r = requests.post(
+                'https://www.google.com/recaptcha/api/siteverify',
+                data={
+                    'secret': settings.SECRET_CAPTCHA,
+                    'response': request.data['token'],
+                }
+            )
+            if r.json()['success']:
+                if 'reference' in request.data:
+                    try:
+                        reference = Reference.objects.get(id=pk)
+                        job = namfarsi(request.data['job'])
+                        detail = namfarsi(request.data['detail'])
+                        success = namfarsi(request.data['success'])
+                        creativity = namfarsi(request.data['creativity'])
+                        teamwork = namfarsi(request.data['teamwork'])
+                        strong = namfarsi(request.data['strong'])
+                        improve = namOrnull(request.data['improve'])
+                        separation = namfarsi(request.data['separation'])
+                        suggest = likert(request.data['suggest'])
+                        point = namOrnull(request.data['point'])
 
-                Manager.objects.create(reference=reference, job=job, detail=detail, success=success, creativity=creativity, teamwork=teamwork,
-                                       strong=strong, improve=improve, separation=separation, suggest=suggest, point=point)
-                response = {'message': "success"}
-                return Response(response, status=status.HTTP_200_OK)
-            except Reference.DoesNotExist:
-                response = {"message": "reference id isn't exist"}
-                return Response(response, status=status.HTTP_404_NOT_FOUND)
-            except ValidationError as e:
-                response = {"message": e}
-                return Response(response, status=status.HTTP_400_BAD_REQUEST)
-            except:
-                response = {"message": "something is wrong"}
-                return Response(response, status=status.HTTP_400_BAD_REQUEST)
+                        Manager.objects.create(reference=reference, job=job, detail=detail, success=success, creativity=creativity, teamwork=teamwork,
+                                               strong=strong, improve=improve, separation=separation, suggest=suggest, point=point)
+                        response = {'message': "success"}
+                        return Response(response, status=status.HTTP_200_OK)
+                    except Reference.DoesNotExist:
+                        response = {"message": "reference id isn't exist"}
+                        return Response(response, status=status.HTTP_404_NOT_FOUND)
+                    except ValidationError as e:
+                        response = {"message": e}
+                        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+                    except:
+                        response = {"message": "something is wrong"}
+                        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    response = {"message": "parent field isn't specified"}
+                    return Response(response, status=status.HTTP_404_NOT_FOUND)
+            return Response(data={'error': 'ReCAPTCHA not verified.'}, status=status.HTTP_406_NOT_ACCEPTABLE)
         else:
-            response = {"message": "parent field isn't specified"}
-            return Response(response, status=status.HTTP_404_NOT_FOUND)
+            return Response(data={'error': 'ReCAPTCHA not verified.'}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
     @action(detail=True, methods=['POST'])
     def partner_reference(self, request, pk=None):
-        if 'reference' in request.data:
-            try:
-                reference = Reference.objects.get(id=pk)
-                job = namfarsi(request.data['job'])
-                detail = namfarsi(request.data['detail'])
-                success = namfarsi(request.data['success'])
-                creativity = namfarsi(request.data['creativity'])
-                teamwork = namfarsi(request.data['teamwork'])
-                strong = namfarsi(request.data['strong'])
-                improve = namfarsi(request.data['improve'])
-                separation = namfarsi(request.data['separation'])
-                suggest = likert(request.data['suggest'])
-                point = namfarsi(request.data['point'])
+        if 'token' in request.data:
+            r = requests.post(
+                'https://www.google.com/recaptcha/api/siteverify',
+                data={
+                    'secret': settings.SECRET_CAPTCHA,
+                    'response': request.data['token'],
+                }
+            )
+            if r.json()['success']:
+                if 'reference' in request.data:
+                    try:
+                        reference = Reference.objects.get(id=pk)
+                        job = namfarsi(request.data['job'])
+                        detail = namfarsi(request.data['detail'])
+                        success = namfarsi(request.data['success'])
+                        creativity = namfarsi(request.data['creativity'])
+                        teamwork = namfarsi(request.data['teamwork'])
+                        strong = namfarsi(request.data['strong'])
+                        improve = namOrnull(request.data['improve'])
+                        separation = namfarsi(request.data['separation'])
+                        suggest = likert(request.data['suggest'])
+                        point = namOrnull(request.data['point'])
 
-                Partner.objects.create(reference=reference, job=job, detail=detail, success=success, creativity=creativity, teamwork=teamwork,
-                                       strong=strong, improve=improve, separation=separation, suggest=suggest, point=point)
-
-                response = {'message': 'success'}
-                return Response(response, status=status.HTTP_200_OK)
-            except Reference.DoesNotExist:
-                response = {"message": "reference id isn't exist"}
-                return Response(response, status=status.HTTP_404_NOT_FOUND)
-            except ValidationError as e:
-                response = {"message": e}
-                return Response(response, status=status.HTTP_400_BAD_REQUEST)
-            except:
-                response = {"message": "something is wrong"}
-                return Response(response, status=status.HTTP_400_BAD_REQUEST)
+                        Partner.objects.create(reference=reference, job=job, detail=detail, success=success, creativity=creativity, teamwork=teamwork,
+                                               strong=strong, improve=improve, separation=separation, suggest=suggest, point=point)
+                        response = {'message': "success"}
+                        return Response(response, status=status.HTTP_200_OK)
+                    except Reference.DoesNotExist:
+                        response = {"message": "reference id isn't exist"}
+                        return Response(response, status=status.HTTP_404_NOT_FOUND)
+                    except ValidationError as e:
+                        response = {"message": e}
+                        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+                    except:
+                        response = {"message": "something is wrong"}
+                        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    response = {"message": "parent field isn't specified"}
+                    return Response(response, status=status.HTTP_404_NOT_FOUND)
+            return Response(data={'error': 'ReCAPTCHA not verified.'}, status=status.HTTP_406_NOT_ACCEPTABLE)
         else:
-            response = {"message": "parent field isn't specified"}
-            return Response(response, status=status.HTTP_404_NOT_FOUND)
+            return Response(data={'error': 'ReCAPTCHA not verified.'}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
 class ManagerViewSet(viewsets.ModelViewSet):

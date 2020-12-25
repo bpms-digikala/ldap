@@ -38,6 +38,7 @@ def get_secret(setting, secrets=secrets):
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_secret('SECRET_KEY')
+SECRET_CAPTCHA = get_secret('SECRET_CAPTCHA')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
