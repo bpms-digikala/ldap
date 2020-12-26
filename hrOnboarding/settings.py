@@ -41,7 +41,7 @@ SECRET_KEY = get_secret('SECRET_KEY')
 SECRET_CAPTCHA = get_secret('SECRET_CAPTCHA')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 # Added by nabavieh
@@ -182,7 +182,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = '/opt/Onboarding/onboarding/static/'
+STATIC_ROOT = '/code/static'
 
 
 # Extra places for collectstatic to find static files.
