@@ -181,7 +181,7 @@ USE_TZ = True
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = '/opt/Onboarding/onboarding/static/'
 STATIC_URL = '/static/'
 
 
