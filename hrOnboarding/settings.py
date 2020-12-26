@@ -41,7 +41,7 @@ SECRET_KEY = get_secret('SECRET_KEY')
 SECRET_CAPTCHA = get_secret('SECRET_CAPTCHA')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 # Added by nabavieh
