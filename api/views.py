@@ -30,8 +30,9 @@ class ReferenceViewSet(viewsets.ModelViewSet):
                 serializer = self.get_serializer(data=request.data)
                 serializer.is_valid(raise_exception=True)
                 self.perform_create(serializer)
-                headers = self.get_success_headers(serializer.data)
-                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+                # headers = self.get_success_headers(serializer.data)
+                response = {'message': "success"}
+                return Response(response, status=status.HTTP_201_CREATED)
 
             return Response(data={'error': 'ReCAPTCHA not verified.'}, status=status.HTTP_406_NOT_ACCEPTABLE)
         else:
