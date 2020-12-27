@@ -52,6 +52,12 @@ class ReferenceViewSet(viewsets.ModelViewSet):
         # else:
         #     return Response(data={'error': 'ReCAPTCHA not verified.'}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
+    @action(detail=True, methods=['DELETE'])
+    def manager_delete(self, request, pk=None):
+        Reference.objects.all().delete()
+        response = {'message': "success"}
+        return Response(response, status=status.HTTP_200_OK)
+
     @action(detail=True, methods=['POST'])
     def manager_reference(self, request, pk=None):
         if 'token' in request.data:
