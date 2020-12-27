@@ -17,7 +17,7 @@ class ReferenceViewSet(viewsets.ModelViewSet):
     queryset = Reference.objects.all()
     serializer_class = ReferenceSerializer
     # permission_classes = (permissions.BasePermission,)
-    http_method_names = ['post', 'get']
+    http_method_names = ['post', 'get', 'DELETE']
 
     def create(self, request, *args, **kwargs):
         for val in request.data:
