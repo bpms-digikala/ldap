@@ -17,7 +17,7 @@ class ReferenceViewSet(viewsets.ModelViewSet):
     queryset = Reference.objects.all()
     serializer_class = ReferenceSerializer
     # permission_classes = (permissions.BasePermission,)
-    http_method_names = ['post', 'get', 'delete']
+    http_method_names = ['post', 'get']
 
     def create(self, request, *args, **kwargs):
         for val in request.data:
@@ -51,12 +51,6 @@ class ReferenceViewSet(viewsets.ModelViewSet):
         #     return Response(data={'error': 'ReCAPTCHA not verified.'}, status=status.HTTP_406_NOT_ACCEPTABLE)
         # else:
         #     return Response(data={'error': 'ReCAPTCHA not verified.'}, status=status.HTTP_406_NOT_ACCEPTABLE)
-
-    @action(detail=True, methods=['DELETE'])
-    def manager_delete(self, request, pk=None):
-        Reference.objects.all().delete()
-        response = {'message': "success"}
-        return Response(response, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['POST'])
     def manager_reference(self, request, pk=None):
@@ -189,10 +183,10 @@ class ReferenceViewSet(viewsets.ModelViewSet):
 class ManagerViewSet(viewsets.ModelViewSet):
     queryset = Manager.objects.all()
     serializer_class = ManagerSerializer
-    http_method_names = ['get', 'delete']
+    http_method_names = ['get']
 
 
 class PartnerViewSet(viewsets.ModelViewSet):
     queryset = Partner.objects.all()
     serializer_class = PartnerSerializer
-    http_method_names = ['get', 'delete']
+    http_method_names = ['get']

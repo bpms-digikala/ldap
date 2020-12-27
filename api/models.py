@@ -10,11 +10,11 @@ class Reference(models.Model):
     m_name = models.CharField(max_length=200, validators=[namfarsi])
     m_email = models.CharField(max_length=50, validators=[emailcheck])
     m_mobile = models.CharField(max_length=20, validators=[mobile])
-    m_uuid = models.CharField(max_length=8, null=True, blank=True)
+    m_uuid = models.CharField(max_length=8)
     p_name = models.CharField(max_length=200, validators=[namfarsi])
     p_email = models.CharField(max_length=50, validators=[emailcheck])
     p_mobile = models.CharField(max_length=20, validators=[mobile])
-    p_uuid = models.CharField(max_length=8, null=True, blank=True)
+    p_uuid = models.CharField(max_length=8)
 
 
 class Manager(models.Model):
