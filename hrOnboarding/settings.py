@@ -70,7 +70,6 @@ INSTALLED_APPS = [
 
 #  develop added by nabavieh   'corsheaders.middleware.CorsMiddleware',
 MIDDLEWARE = [
-    'hrOnboarding.middleware.MyMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
