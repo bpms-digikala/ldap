@@ -1,7 +1,5 @@
-from django.utils.deprecation import MiddlewareMixin
 
-
-class ServerHeader(MiddlewareMixin):
+class ServerHeader(object):
     def process_response(self, request, response):
-        response['Server'] = ''
+        del response['Server']
         return response
