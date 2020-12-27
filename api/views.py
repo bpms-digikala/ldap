@@ -9,6 +9,8 @@ from .validators import namfarsi, likert, namOrnull
 from django.core.exceptions import ValidationError
 from django.conf import settings
 import requests
+import uuid
+import bleach
 
 
 class ReferenceViewSet(viewsets.ModelViewSet):
@@ -18,6 +20,12 @@ class ReferenceViewSet(viewsets.ModelViewSet):
     http_method_names = ['post', 'get']
 
     def create(self, request, *args, **kwargs):
+        for val in request.data:
+            request.data[val] = bleach.clean(str(request.data[val]))
+        man = uuid.uuid4()
+        request.data['m_uuid'] = str(man)[:8]
+        part = uuid.uuid4()
+        request.data['p_uuid'] = str(part)[:8]
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -55,9 +63,12 @@ class ReferenceViewSet(viewsets.ModelViewSet):
                 }
             )
             if r.json()['success']:
-                if 'reference' in request.data:
+                for val in request.data:
+                    request.data[val] = bleach.clean(str(request.data[val]))
+                if 'reference' in request.data and pk == 'survey':
                     try:
-                        reference = Reference.objects.get(id=pk)
+                        ref = request.data['reference']
+                        reference = Reference.objects.get(m_uuid=ref)
                         job = namfarsi(request.data['job'])
                         detail = namfarsi(request.data['detail'])
                         success = namfarsi(request.data['success'])
@@ -80,7 +91,7 @@ class ReferenceViewSet(viewsets.ModelViewSet):
                         response = {"message": e}
                         return Response(response, status=status.HTTP_400_BAD_REQUEST)
                     except:
-                        response = {"message": "something is wrong"}
+                        response = {"message": "Something went wrong"}
                         return Response(response, status=status.HTTP_400_BAD_REQUEST)
                 else:
                     response = {"message": "parent field isn't specified"}
@@ -91,9 +102,12 @@ class ReferenceViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['POST'])
     def partner_reference(self, request, pk=None):
-        if 'reference' in request.data:
+        for val in request.data:
+            request.data[val] = bleach.clean(str(request.data[val]))
+        if 'reference' in request.data and pk == 'survey':
             try:
-                reference = Reference.objects.get(id=pk)
+                ref = request.data['reference']
+                reference = Reference.objects.get(p_uuid=ref)
                 job = namfarsi(request.data['job'])
                 detail = namfarsi(request.data['detail'])
                 success = namfarsi(request.data['success'])
@@ -116,7 +130,7 @@ class ReferenceViewSet(viewsets.ModelViewSet):
                 response = {"message": e}
                 return Response(response, status=status.HTTP_400_BAD_REQUEST)
             except:
-                response = {"message": "something is wrong"}
+                response = {"message": "something went wrong"}
                 return Response(response, status=status.HTTP_400_BAD_REQUEST)
         else:
             response = {"message": "parent field isn't specified"}
