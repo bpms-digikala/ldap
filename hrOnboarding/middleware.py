@@ -1,5 +1,5 @@
 
-class ServerHeader(object):
+class RemoveHeaders(object):
     def process_response(self, request, response):
-        del response['Server']
+        response['Server'] = ''
         return response
