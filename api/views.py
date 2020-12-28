@@ -23,9 +23,9 @@ class ReferenceViewSet(viewsets.ModelViewSet):
         for val in request.data:
             request.data[val] = bleach.clean(str(request.data[val]))
         man = uuid.uuid4()
-        request.data['m_uuid'] = str(man)[:8]
+        request.data['m_uuid'] = str(man)
         part = uuid.uuid4()
-        request.data['p_uuid'] = str(part)[:8]
+        request.data['p_uuid'] = str(part)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
