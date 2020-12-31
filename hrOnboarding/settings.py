@@ -86,6 +86,7 @@ ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://172.16.31.122:3000',
+    'http://google.com',
 )
 #  develop
 
