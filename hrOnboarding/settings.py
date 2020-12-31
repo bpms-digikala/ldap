@@ -83,10 +83,10 @@ MIDDLEWARE = [
 #  develop added by nabavieh
 
 ALLOWED_HOSTS = ['*']
-CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ORIGIN_WHITELIST = (
-#     'http://127.0.0.1:3000',
-# )
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'http://172.16.31.122:3000',
+)
 #  develop
 
 ROOT_URLCONF = 'hrOnboarding.urls'
