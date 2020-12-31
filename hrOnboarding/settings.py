@@ -45,9 +45,9 @@ DEBUG = False
 
 
 # Added by nabavieh
-CSRF_COOKIE_SECURE = False
-CSRF_USE_SESSIONS = False
-SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
+CSRF_USE_SESSIONS = True
+SESSION_COOKIE_SECURE = True
 
 
 # Application definition
@@ -84,9 +84,9 @@ MIDDLEWARE = [
 
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = (
-    'http://127.0.0.1:3000',
-)
+# CORS_ORIGIN_WHITELIST = (
+#     'http://127.0.0.1:3000',
+# )
 #  develop
 
 ROOT_URLCONF = 'hrOnboarding.urls'
@@ -185,7 +185,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
-    )
+)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
