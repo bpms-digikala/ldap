@@ -1,5 +1,5 @@
 from .models import Reference, Manager, Partner
-from .validators import namfarsi, likert, namOrnull
+from .validators import namfarsi, likert, namOrnull, allowchar
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django.core.exceptions import ValidationError
@@ -16,14 +16,14 @@ def insertData(request, pk, value):
                 reference = Reference.objects.get(m_uuid=ref)
             elif value == 'Partner':
                 reference = Reference.objects.get(p_uuid=ref)
-            job = namfarsi(request.data['job'])
-            detail = namfarsi(request.data['detail'])
-            success = namfarsi(request.data['success'])
-            creativity = namfarsi(request.data['creativity'])
-            teamwork = namfarsi(request.data['teamwork'])
-            strong = namfarsi(request.data['strong'])
+            job = allowchar(request.data['job'])
+            detail = allowchar(request.data['detail'])
+            success = allowchar(request.data['success'])
+            creativity = allowchar(request.data['creativity'])
+            teamwork = allowchar(request.data['teamwork'])
+            strong = allowchar(request.data['strong'])
             improve = namOrnull(request.data['improve'])
-            separation = namfarsi(request.data['separation'])
+            separation = allowchar(request.data['separation'])
             suggest = likert(request.data['suggest'])
             point = namOrnull(request.data['point'])
             if value == 'Manager':

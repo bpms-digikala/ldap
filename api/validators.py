@@ -38,10 +38,20 @@ def namfarsi(value):
         return value
 
 
-def namOrnull(value):
-    if not(re.match("^[\u0600-\u06FF\\s]+$", value)) and not(re.match("^$|\\s+", value)):
+def allowchar(value):
+    if not(re.match("^[0-9\\.\\-:a-zA-Z\u0600-\u06FF\\s]+$", value)):
         raise ValidationError(
-            _('%(value)s حروف فارسی نمی‌باشد.'),
+            _('%(value)s کارکتر مجاز نمی‌باشد.'),
+            params={'value': value},
+        )
+    else:
+        return value
+
+
+def namOrnull(value):
+    if not(re.match("^[0-9\\.\\-:a-zA-Z\u0600-\u06FF\\s]+$", value)) and not(re.match("^$|\\s+", value)):
+        raise ValidationError(
+            _('%(value)s کارکتر مجاز نمی‌باشد.'),
             params={'value': value},
         )
     else:
