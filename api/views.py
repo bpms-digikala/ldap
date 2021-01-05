@@ -17,7 +17,7 @@ class ReferenceViewSet(viewsets.ModelViewSet):
     queryset = Reference.objects.all()
     serializer_class = ReferenceSerializer
     # permission_classes = (permissions.BasePermission,)
-    http_method_names = ['post', 'get']
+    http_method_names = ['post', 'get', 'delete']
 
     def create(self, request, *args, **kwargs):
         if 'token' in request.data:
@@ -63,10 +63,10 @@ class ReferenceViewSet(viewsets.ModelViewSet):
 class ManagerViewSet(viewsets.ModelViewSet):
     queryset = Manager.objects.all()
     serializer_class = ManagerSerializer
-    http_method_names = ['get']
+    http_method_names = ['get', 'delete']
 
 
 class PartnerViewSet(viewsets.ModelViewSet):
     queryset = Partner.objects.all()
     serializer_class = PartnerSerializer
-    http_method_names = ['get']
+    http_method_names = ['get', 'delete']
