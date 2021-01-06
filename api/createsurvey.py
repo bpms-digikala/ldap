@@ -18,19 +18,17 @@ def insertData(request, pk, value):
                 reference = Reference.objects.get(p_uuid=ref)
             job = allowchar(request.data['job'])
             detail = allowchar(request.data['detail'])
-            success = allowchar(request.data['success'])
             creativity = allowchar(request.data['creativity'])
-            teamwork = allowchar(request.data['teamwork'])
             strong = allowchar(request.data['strong'])
             improve = namOrnull(request.data['improve'])
             separation = allowchar(request.data['separation'])
             suggest = likert(request.data['suggest'])
             point = namOrnull(request.data['point'])
             if value == 'Manager':
-                Manager.objects.create(reference=reference, job=job, detail=detail, success=success, creativity=creativity, teamwork=teamwork,
+                Manager.objects.create(reference=reference, job=job, detail=detail, creativity=creativity,
                                        strong=strong, improve=improve, separation=separation, suggest=suggest, point=point)
             elif value == 'Partner':
-                Partner.objects.create(reference=reference, job=job, detail=detail, success=success, creativity=creativity, teamwork=teamwork,
+                Partner.objects.create(reference=reference, job=job, detail=detail, creativity=creativity,
                                        strong=strong, improve=improve, separation=separation, suggest=suggest, point=point)
             response = {'message': "success"}
             return Response(response, status=status.HTTP_200_OK)

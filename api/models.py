@@ -4,6 +4,8 @@ from .validators import codemeli, namfarsi, mobile, emailcheck, likert, namOrnul
 
 class Reference(models.Model):
     date = models.DateTimeField(auto_now_add=True, blank=True)
+    n_name = models.CharField(
+        max_length=200, default='name', validators=[namfarsi])
     email = models.CharField(max_length=50, validators=[emailcheck])
     codemelli = models.CharField(max_length=10, validators=[
                                  codemeli], unique=True)
@@ -22,9 +24,7 @@ class Manager(models.Model):
     reference = models.OneToOneField(Reference, on_delete=models.CASCADE)
     job = models.CharField(max_length=200, validators=[namfarsi])
     detail = models.CharField(max_length=255, validators=[namfarsi])
-    success = models.CharField(max_length=255, validators=[namfarsi])
     creativity = models.CharField(max_length=255, validators=[namfarsi])
-    teamwork = models.CharField(max_length=255, validators=[namfarsi])
     strong = models.CharField(max_length=255, validators=[namfarsi])
     improve = models.CharField(max_length=255, validators=[
                                namOrnull], blank=True)
@@ -40,9 +40,7 @@ class Partner(models.Model):
     reference = models.OneToOneField(Reference, on_delete=models.CASCADE)
     job = models.CharField(max_length=200, validators=[namfarsi])
     detail = models.CharField(max_length=255, validators=[namfarsi])
-    success = models.CharField(max_length=255, validators=[namfarsi])
     creativity = models.CharField(max_length=255, validators=[namfarsi])
-    teamwork = models.CharField(max_length=255, validators=[namfarsi])
     strong = models.CharField(max_length=255, validators=[namfarsi])
     improve = models.CharField(max_length=255, validators=[
                                namOrnull], blank=True)
