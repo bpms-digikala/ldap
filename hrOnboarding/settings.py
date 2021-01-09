@@ -41,13 +41,13 @@ SECRET_KEY = get_secret('SECRET_KEY')
 SECRET_CAPTCHA = get_secret('SECRET_CAPTCHA')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 # Added by nabavieh
-CSRF_COOKIE_SECURE = True
-CSRF_USE_SESSIONS = True
-SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
+CSRF_USE_SESSIONS = False
+SESSION_COOKIE_SECURE = False
 
 
 # Application definition
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'api',
     'corsheaders',
+    'django_python3_ldap',
 ]
 
 
@@ -120,7 +121,7 @@ DATABASES = {
         'NAME': 'onboarding',
         'USER': 'nabavieh',
         'PASSWORD': get_secret('DB_PASSWORD'),
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
@@ -159,6 +160,52 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+AUTHENTICATION_BACKENDS = (
+    'django_auth_ldap.backend.LDAPBackend',
+    # 'django_auth_ldap.backend.LDAPBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LDAP_AUTH_URL = "ldap://dk-dc01.digikala.com:389"
+LDAP_AUTH_USE_TLS = False
+LDAP_AUTH_SEARCH_BASE = "OU=Digikala Users,DC=digikala,DC=COM"
+LDAP_AUTH_OBJECT_CLASS = "user"
+LDAP_AUTH_USER_FIELDS = {
+    "username": "userPrincipalName",
+    # "username": "sAMAccountName",
+    "first_name": "givenName",
+    "last_name": "sn",
+    "email": "mail",
+}
+
+LDAP_AUTH_USER_LOOKUP_FIELDS = ("username",)
+LDAP_AUTH_CLEAN_USER_DATA = "django_python3_ldap.utils.clean_user_data"
+LDAP_AUTH_SYNC_USER_RELATIONS = "django_python3_ldap.utils.sync_user_relations"
+LDAP_AUTH_FORMAT_SEARCH_FILTERS = "django_python3_ldap.utils.format_search_filters"
+LDAP_AUTH_FORMAT_USERNAME = "django_python3_ldap.utils.format_username_active_directory"
+# LDAP_AUTH_ACTIVE_DIRECTORY_DOMAIN = "digikala.com"
+LDAP_AUTH_CONNECTION_USERNAME = "CN=Digikala Query,OU=GlobalServiceAccounts,OU=DKHighLevelObjects,DC=digikala,DC=COM"
+LDAP_AUTH_CONNECTION_PASSWORD = "C?vH0~6W:hyafb"
+# LDAP_AUTH_CONNECT_TIMEOUT = None
+# LDAP_AUTH_RECEIVE_TIMEOUT = None
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django_python3_ldap": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
